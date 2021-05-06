@@ -4,18 +4,16 @@ import br.com.luanadev.affirmations.R
 import br.com.luanadev.affirmations.model.Affirmation
 
 class Datasource {
-    fun loadAffirmations(): List<Affirmation> {
-        return listOf<Affirmation>(
-            Affirmation(R.string.affirmation1, R.drawable.image1),
-            Affirmation(R.string.affirmation2, R.drawable.image2),
-            Affirmation(R.string.affirmation3, R.drawable.image3),
-            Affirmation(R.string.affirmation4, R.drawable.image4),
-            Affirmation(R.string.affirmation5, R.drawable.image5),
-            Affirmation(R.string.affirmation6, R.drawable.image6),
-            Affirmation(R.string.affirmation7, R.drawable.image7),
-            Affirmation(R.string.affirmation8, R.drawable.image8),
-            Affirmation(R.string.affirmation9, R.drawable.image9),
-            Affirmation(R.string.affirmation10, R.drawable.image10)
-        )
-    }
+    val loadAffirmations = listOf<Affirmation>(
+        Affirmation("Eu sou Forte.", R.drawable.image1),
+        Affirmation("Eu acredito em mim.", R.drawable.image2),
+        Affirmation("Cada dia é uma nova oportunidade de crescer e ser uma versão melhor de mim mesmo.", R.drawable.image3),
+        Affirmation("Cada desafio na minha vida é uma oportunidade de aprender.", R.drawable.image4),
+        Affirmation("Tenho muito a agradecer.", R.drawable.image5),
+        Affirmation("Coisas boas sempre acontecem em minha vida.", R.drawable.image6),
+        Affirmation("Novas oportunidades me aguardam a cada passo.", R.drawable.image7),
+        Affirmation("Tenho coragem de seguir meu coração.", R.drawable.image8),
+        Affirmation("As coisas acontecerão precisamente no momento certo.", R.drawable.image9),
+        Affirmation("Estarei presente em todos os momentos que este dia trouxer.", R.drawable.image10)
+    )
 }

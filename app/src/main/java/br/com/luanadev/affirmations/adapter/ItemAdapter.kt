@@ -1,37 +1,54 @@
 package br.com.luanadev.affirmations.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import br.com.luanadev.affirmations.R
+import br.com.luanadev.affirmations.databinding.ListItemBinding
 import br.com.luanadev.affirmations.model.Affirmation
 
-class ItemAdapter(
-    private val context: Context,
-    private val dataset: List<Affirmation>
-) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter : ListAdapter<Affirmation, ItemAdapter.ItemViewHolder>(DIFF_CALLBACK) {
 
-    class ItemViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.findViewById(R.id.item_title)
-        val imageView: ImageView = view.findViewById(R.id.item_image)
-    }
+    var gotItItemClickListener: (() -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item, parent, false)
-
-        return ItemViewHolder(adapterLayout)
+        return ItemViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.textView.text = context.resources.getString(item.stringResourceId)
-        holder.imageView.setImageResource(item.imageResourceId)
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount() = dataset.size
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Affirmation>() {
+            override fun areItemsTheSame(oldItem: Affirmation, newItem: Affirmation): Boolean {
+                return oldItem.title == newItem.title
+            }
+
+            override fun areContentsTheSame(oldItem: Affirmation, newItem: Affirmation): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
+    class ItemViewHolder(
+        private val itemBinding: ListItemBinding
+    ) : RecyclerView.ViewHolder(itemBinding.root) {
+
+        fun bind(affirmation: Affirmation) {
+            itemBinding.itemTitle.text = affirmation.title
+            itemBinding.itemImage.setImageResource(affirmation.logo)
+        }
+
+        companion object {
+            fun create(parent: ViewGroup): ItemViewHolder {
+                val itemBinding = ListItemBinding
+                    .inflate(LayoutInflater.from(parent.context), parent, false)
+
+                return ItemViewHolder(itemBinding)
+            }
+        }
+    }
 }
